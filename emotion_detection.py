@@ -1,11 +1,14 @@
-import requests
+"""Detect Emotion with watson"""
 import json
+import requests
 
 def emotion_detector(text_to_analyse):
+    """Get a text to analzye the emotion of and find the dominant emotion"""
     resp = requests.post(
-        'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict',
+        'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict', # pylint: disable=line-too-long
         headers={"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"},
-        json={"raw_document": {"text": text_to_analyse}}
+        json={"raw_document": {"text": text_to_analyse}},
+        timeout=60
     )
     if resp.status_code == 400:
         return {

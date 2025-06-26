@@ -1,14 +1,17 @@
-from flask import Flask, request, jsonify, render_template
+"""The Server File"""
+from flask import Flask, request, render_template
 from emotion_detection import emotion_detector
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
+    """Render the home page"""
     return render_template('index.html')
 
 @app.route("/emotionDetector")
 def emotion_detector_endpoint():
+    """Call the API to get the emotion of input text"""
     text_to_analyse = request.args.get('textToAnalyze')
     emotion_dict = emotion_detector(text_to_analyse)
     if emotion_dict['dominant_emotion'] is None:
